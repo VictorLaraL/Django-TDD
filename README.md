@@ -1,2 +1,3 @@
-# Django-Doc-TDD
-All best practice and learning from this example about TDD
+# Django-TDD
+
+Practice to learn about TDD in Django.
