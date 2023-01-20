@@ -21,7 +21,7 @@ services:
       - db
   
   db:
-    image: postgres:13-alpaine
+    image: postgres:13-alpine
     volumes:
       - dev-db-data:/var/lib/postgressql/data
     environment:
