@@ -15,7 +15,7 @@ from core.models import Recipe
 from recipe.serializers import RecipeSerializer
 
 
-RECIPES_URL = reverse('recipe:recipe')
+RECIPES_URL = reverse('recipe:recipe-list')
 
 
 def create_recipe(user, **params):
@@ -23,7 +23,7 @@ def create_recipe(user, **params):
     defaults = {
         'title': 'Sample recipe title',
         'time_minutes': 22,
-        'price': Decimal('5,25'),
+        'price': Decimal('5.25'),
         'description': 'Sample description',
         'link': 'https://sample.com/recipe.com',
     }
@@ -84,5 +84,5 @@ class PrivateRecipeAPITest(TestCase):
 
         recipes = Recipe.objects.filter(user=self.user)
         serializer = RecipeSerializer(recipes, many=True)
-        self.assertEqual(res.status_code, status.HTTP_200_oK)
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
         self.assertEqual(res.data, serializer.data)
