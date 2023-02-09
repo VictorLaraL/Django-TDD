@@ -20,9 +20,11 @@ from recipe.serializers import (
 
 RECIPES_URL = reverse('recipe:recipe-list')
 
+
 def detail_url(recipe_id):
     """ Create and return a recipe detail URL. """
     return reverse('recipe:recipe-detail', args=[recipe_id])
+
 
 def create_recipe(user, **params):
     """ Create and return a sample recipe. """
@@ -39,6 +41,7 @@ def create_recipe(user, **params):
 
     recipe = Recipe.objects.create(user=user, **defaults)
     return recipe
+
 
 def create_user(**params):
     """ Create and return a new user """
@@ -130,10 +133,10 @@ class PrivateRecipeAPITest(TestCase):
             user=self.user,
             title='sample recipe title',
             link=original_link,
-        )
+            )
 
         payload = {'title': 'New recipe title'}
-        url=detail_url(recipe.id)
+        url = detail_url(recipe.id)
         res = self.client.patch(url, payload)
 
         self.assertEqual(res.status_code, status.HTTP_200_OK)
@@ -169,7 +172,7 @@ class PrivateRecipeAPITest(TestCase):
         for k, v in payload.items():
             self.assertEqual(getattr(recipe, k), v)
         self.assertEqual(recipe.user, self.user)
-        
+
     def test_update_user_returns_error(self):
         """ Test changing the recipe user results in an error. """
         new_user = create_user(
@@ -200,7 +203,7 @@ class PrivateRecipeAPITest(TestCase):
         new_user = create_user(
             email='user@1234.com',
             password='test1234',
-        ) 
+        )
         recipe = create_recipe(user=new_user)
 
         url = detail_url(recipe.id)
