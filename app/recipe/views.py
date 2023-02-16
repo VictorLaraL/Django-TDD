@@ -1,12 +1,18 @@
 """
 Views for the recipe APIs.
 """
-from rest_framework import viewsets
+from rest_framework import (
+    viewsets,
+    mixins
+    )
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 
-from core.models import Recipe
 from recipe import serializers
+from core.models import (
+    Recipe,
+    Tag,
+    )
 
 
 class RecipeViewSet(viewsets.ModelViewSet):
@@ -28,3 +34,20 @@ class RecipeViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         """ Create a new recipe. """
         serializer.save(user=self.request.user)
+
+
+class TagViewSet(
+                viewsets.GenericViewSet,
+                mixins.ListModelMixin,
+                mixins.UpdateModelMixin,
+                mixins.DestroyModelMixin
+                ):
+    """ Viewsets for tag API's """
+    serializer_class = serializers.TagSerializer
+    queryset = Tag.objects.all()
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        """ Filter  querysets to authenticated user. """
+        return self.queryset.filter(user=self.request.user).order_by('-name')
