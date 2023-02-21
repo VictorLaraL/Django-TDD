@@ -12,6 +12,7 @@ from recipe import serializers
 from core.models import (
     Recipe,
     Tag,
+    Ingredient,
     )
 
 
@@ -50,4 +51,19 @@ class TagViewSet(
 
     def get_queryset(self):
         """ Filter  querysets to authenticated user. """
+        return self.queryset.filter(user=self.request.user).order_by('-name')
+
+
+class IngredientViewSet(
+                        viewsets.GenericViewSet,
+                        mixins.ListModelMixin
+                        ):
+    """ Viewsets for ingredients """
+    serializer_class = serializers.IngredientSerializer
+    queryset = Ingredient.objects.all()
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        """ Filter querysets to authenticated user. """
         return self.queryset.filter(user=self.request.user).order_by('-name')
