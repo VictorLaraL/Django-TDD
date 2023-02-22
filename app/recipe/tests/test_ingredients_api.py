@@ -25,6 +25,7 @@ def detail_url(ingredient_id):
     """ Return url with ingredient id. """
     return reverse('recipe:ingredient-detail', args=[ingredient_id])
 
+
 class PublicIngredientsApiTests(TestCase):
     """ Test unautenthication API request. """
 

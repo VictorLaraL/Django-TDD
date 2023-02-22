@@ -19,7 +19,6 @@ class TagSerializer(serializers.ModelSerializer):
         read_only_fields = ['id']
 
 
-
 class IngredientSerializer(serializers.ModelSerializer):
     """ Serializer for ingredients. """
 
@@ -39,7 +38,15 @@ class RecipeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Recipe
-        fields = ['id', 'title', 'time_minutes', 'price', 'link', 'tags', 'ingredients']
+        fields = [
+            'id',
+            'title',
+            'time_minutes',
+            'price',
+            'link',
+            'tags',
+            'ingredients'
+            ]
         read_only_fields = ['id']
 
     def _get_or_create_tags(self, tags, recipe):
@@ -57,7 +64,7 @@ class RecipeSerializer(serializers.ModelSerializer):
         auth_user = self.context['request'].user
         for ingredient in ingredients:
             ingredient_obj, created = Ingredient.objects.get_or_create(
-                user = auth_user,
+                user=auth_user,
                 **ingredient,
             )
             recipe.ingredients.add(ingredient_obj)
