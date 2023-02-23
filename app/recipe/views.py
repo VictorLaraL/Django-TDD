@@ -80,4 +80,3 @@ class IngredientViewSet(BaseRecipeAttrViewSet):
     """ Viewsets for ingredients """
     serializer_class = serializers.IngredientSerializer
     queryset = Ingredient.objects.all()
-
