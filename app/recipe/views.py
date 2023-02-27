@@ -92,13 +92,14 @@ class RecipeViewSet(viewsets.ModelViewSet):
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
 @extend_schema_view(
     list=extend_schema(
         parameters=[
             OpenApiParameter(
                 'assigned_only',
                 OpenApiTypes.INT,
-                enum=[0,1],
+                enum=[0, 1],
                 description='Filter by items assigned to recipe.',
             ),
         ]
@@ -121,7 +122,7 @@ class BaseRecipeAttrViewSet(
         )
         queryset = self.queryset
         if assigned_only:
-                queryset = queryset.filter(recipe__isnull=False)
+            queryset = queryset.filter(recipe__isnull=False)
 
         return queryset.filter(
             user=self.request.user
